@@ -7,7 +7,6 @@ from inspect_row_data import inspect_row_data
 from train_model import train_svc_model, predict_and_evaluate, train_random_forest_model, compare_models
 from confusion_matrix import draw_confusion_matrix, matrix_accuracy
 from five_fold_cross_validation import cross_validation_scores, draw_cv_results
-
 import pandas as pd
 
 pd.set_option('display.width', 400)
