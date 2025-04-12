@@ -29,9 +29,10 @@ def inspect_row_data(activity_labels):
             indices.append(i)
             first_indices[label] = i
 
+    print("\n************************* Row Data Shape ************************")
     print(f'The shape of raw total_acc_x_train: {acc_x.shape}')
-    print(f'The shape of lables: {labels.shape}')
-    print('\n********************* Signals examples for each activity *********************\n')
+    print(f'The shape of raw total acc_y_train: {acc_y.shape}')
+    print(f'The shape of raw total acc_z_train: {acc_z.shape}')
 
     fig, axes = plt.subplots(2, 3, figsize=(15, 6))  # 2 rows, 3 columns
     axes = axes.flatten()

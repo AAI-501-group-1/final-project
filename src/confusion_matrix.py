@@ -20,3 +20,18 @@ def draw_confusion_matrix(y_test, y_pred, activity_labels):
     plt.yticks(rotation=45)
     plt.tight_layout()
     plt.show()
+
+    return cm
+
+def matrix_accuracy(cm, activity_labels):
+    # Compute accuracy from the confusion matrix
+    labels = activity_labels["label"].values
+
+    print("*************************** Confusion Matrix Accuracy **********************")
+    # Display class-wise accuracy
+    print("Per-Class Accuracy (Recall): \n")
+    for i in range(len(labels)):
+        total = sum(cm[i])  # total actual samples for this class
+        correct = cm[i][i]  # correct predictions (diagonal element)
+        accuracy = correct / total * 100  # accuracy % for the class
+        print(labels[i], ":", correct, "out of", total, "correct -->", round(accuracy, 2), "%")

@@ -4,8 +4,9 @@ from normilaze_data import normalize_data
 from draw_boxplot import draw_boxplot
 from check_duplicates import check_duplicates_and_missing_values
 from inspect_row_data import inspect_row_data
-from train_model import train_svc_model, predict_and_evaluate
-from confusion_matrix import draw_confusion_matrix
+from train_model import train_svc_model, predict_and_evaluate, train_random_forest_model, compare_models
+from confusion_matrix import draw_confusion_matrix, matrix_accuracy
+from five_fold_cross_validation import cross_validation_scores, draw_cv_results
 
 import pandas as pd
 
@@ -20,12 +21,14 @@ check_duplicates_and_missing_values(x_train, x_test)
 inspect_row_data(activity_labels)
 
 svc_clf = train_svc_model(x_train_scaled, y_train)
-y_pred, accuracy,report = predict_and_evaluate(svc_clf, x_test_scaled, y_test, activity_labels)
+svc_y_pred, svc_accuracy, svc_report = predict_and_evaluate(svc_clf, x_test_scaled, y_test, activity_labels)
 
-# Print Accuracy and Classification report
-print("****************** Training SVC Model ***************")
-print("\nAccuracy on test set: {:.2f}%".format(accuracy * 100))
-print("\nClassification Report: ")
-print(report)
+cm = draw_confusion_matrix(y_test, svc_y_pred, activity_labels)
+matrix_accuracy(cm, activity_labels)
+cv_scores = cross_validation_scores(x_train_scaled, y_train)
+draw_cv_results(cv_scores)
 
-draw_confusion_matrix(y_test, y_pred, activity_labels)
+rf_clf = train_random_forest_model(x_train_scaled, y_train)
+rf_y_pred, rf_accuracy, rf_report = predict_and_evaluate(rf_clf, x_test_scaled, y_test, activity_labels)
+
+compare_models(svc_accuracy, rf_accuracy)
